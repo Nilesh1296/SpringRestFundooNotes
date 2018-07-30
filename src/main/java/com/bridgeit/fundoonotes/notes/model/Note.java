@@ -1,57 +1,58 @@
 package com.bridgeit.fundoonotes.notes.model;
 
 import java.util.Date;
-
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bridgeit.fundoonotes.user.model.User;
 
 @Entity
-@Table(name = "User")
+@Table
 public class Note {
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
-	private User user;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int idNote;
+	
+	@ManyToOne
+	private User user;
+	@Column
 	private String title;
+	
+	@Column
 	private String description;
+	
+	@Column
 	private Date createddate;
+	
+	@Column
 	private Date modifiedDate;
+	
+	@Column
 	private String colour = "white";
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	private boolean archive = false;
 	private boolean trash = false;
 	private boolean pin = false;
 
-	public Note(int id, String title, String description, Date createddate, Date modifiedDate, String colour,
-			boolean archive, boolean trash, boolean pin) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.createddate = createddate;
-		this.modifiedDate = modifiedDate;
-		this.colour = colour;
-		this.archive = archive;
-		this.trash = trash;
-		this.pin = pin;
-	}
-
 	public int getId() {
-		return id;
+		return idNote;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.idNote = id;
 	}
 
 	public String getTitle() {

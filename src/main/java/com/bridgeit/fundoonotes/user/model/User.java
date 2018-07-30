@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "User")
+@Table
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

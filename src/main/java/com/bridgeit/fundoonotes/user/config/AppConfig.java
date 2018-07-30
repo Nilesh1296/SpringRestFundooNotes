@@ -23,8 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.bridgeit.fundoonotes.user")
-public class AppConfig {
+@ComponentScan(basePackages = "com.bridgeit.fundoonotes")
+public class AppConfig{
 	@Autowired
 	private Environment env;
     @Bean
@@ -37,7 +37,7 @@ public class AppConfig {
         
 		 factorybean.setHibernateProperties(properties);
 		 factorybean.setDataSource(datasource());
-	      factorybean.setPackagesToScan("com.bridgeit.fundoonotes.user.model");
+	      factorybean.setPackagesToScan("com.bridgeit.fundoonotes");
 		return factorybean;
 
 	}
@@ -72,4 +72,17 @@ public class AppConfig {
         transactionManager.setSessionFactory(getSessionFactory().getObject());
         return transactionManager;
      }
+    
+  
+	/*@Bean
+    public WebMvcConfigurer corsConfigurer()
+    {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedMethods("GET", "POST","DELETE","PUT");
+            }
+        };
+    }*/
+   
 }

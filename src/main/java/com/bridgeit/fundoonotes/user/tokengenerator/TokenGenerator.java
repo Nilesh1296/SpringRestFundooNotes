@@ -41,8 +41,10 @@ public class TokenGenerator
 	 
 	    //Builds the JWT and serializes it to a compact, URL-safe string
 	    return builder.compact();
+	
 	}
-public long parseJWT(String jwt) {
+	
+   public static long parseJWT(String jwt) {
 		
 	    Claims claims = Jwts.parser()         
 	       .setSigningKey(DatatypeConverter.parseBase64Binary(token))

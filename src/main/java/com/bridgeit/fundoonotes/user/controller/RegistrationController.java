@@ -1,6 +1,9 @@
 package com.bridgeit.fundoonotes.user.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +28,7 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ResponseEntity<String> save(@RequestBody User user) {
-		
+		System.out.println("Added dataa in controller");
 	   int userid = userservice.save(user);
 		if(userid>0)
 		{
@@ -51,10 +54,10 @@ public class RegistrationController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody Login login) 
 	{
-		boolean EmailExist = userservice.checkUserByEmail(login.getEmail(),login.getPassword());
+		String token = userservice.checkUserByEmail(login.getEmail(),login.getPassword());
          
-		if (EmailExist) {
-			return new ResponseEntity<String>("login success:", HttpStatus.OK);
+		if (token!=null) {
+			return new ResponseEntity<String>(token, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("Either wrong email or password:", HttpStatus.CONFLICT);
 		}
@@ -73,13 +76,13 @@ public class RegistrationController {
 		}
 	}
 	@RequestMapping(value ="/forgetpassword",method = RequestMethod.POST)
-	public ResponseEntity<String> forgetPassword(@RequestBody Login login,HttpServletRequest request)
+	public ResponseEntity<String> forgetPassword(@RequestBody Login login,HttpServletRequest request,HttpServletResponse response) throws IOException
 	{
 		String url = "http://"+request.getServerName()+":"+request.getServerPort()+""+request.getContextPath()+"/resetpassword/";
 		System.out.println("controller "+url);
 		String email=login.getEmail();
 		System.out.println(email);
-		boolean status = userservice.forgetPassword(email, url);
+		boolean status = userservice.forgetPassword(email, url,response);
 		if(status)
 		{
 			return new ResponseEntity<String>("Link Sended:", HttpStatus.OK);
